@@ -1,0 +1,290 @@
+{
+  "info": {
+    "_postman_id": "9e353ccc-cb95-4e8a-bdbf-65b88dd8d3ef",
+    "name": "OTUS-MSA-HW2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "13243486"
+  },
+  "item": [
+    {
+      "name": "create user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseJSON = JSON.parse(responseBody)",
+              "pm.collectionVariables.set(\"userId\", responseJSON[\"id\"])",
+              "",
+              "pm.test(\"validate response\", function () {",
+              "    pm.expect(pm.response.code).to.eql(201)",
+              "",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.eql(\"dglukhov\");",
+              "    pm.expect(jsonData.firstName).to.eql(\"Denis\");",
+              "    pm.expect(jsonData.lastName).to.eql(\"Glukhov\");",
+              "    pm.expect(jsonData.email).to.eql(\"denis.glukhov@mail.ru\");",
+              "    pm.expect(jsonData.phone).to.eql(\"+1111111111\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"dglukhov\",\n    \"firstName\": \"Denis\",\n    \"lastName\": \"Glukhov\",\n    \"email\": \"denis.glukhov@mail.ru\",\n    \"phone\": \"+1111111111\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/user",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get user info",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseJSON = JSON.parse(responseBody)",
+              "",
+              "pm.test(\"validate response\", function () {",
+              "    pm.expect(pm.response.code).to.eql(200)",
+              "",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.eql(\"dglukhov\");",
+              "    pm.expect(jsonData.firstName).to.eql(\"Denis\");",
+              "    pm.expect(jsonData.lastName).to.eql(\"Glukhov\");",
+              "    pm.expect(jsonData.email).to.eql(\"denis.glukhov@mail.ru\");",
+              "    pm.expect(jsonData.phone).to.eql(\"+1111111111\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/user/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "user",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseJSON = JSON.parse(responseBody)",
+              "",
+              "pm.test(\"validate response\", function () {",
+              "    pm.expect(pm.response.code).to.eql(200)",
+              "",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.eql(\"dglukhov2\");",
+              "    pm.expect(jsonData.firstName).to.eql(\"D\");",
+              "    pm.expect(jsonData.lastName).to.eql(\"G\");",
+              "    pm.expect(jsonData.email).to.eql(\"denis.glukhov@mail.ru\");",
+              "    pm.expect(jsonData.phone).to.eql(\"+1111111111\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"dglukhov2\",\n    \"firstName\": \"D\",\n    \"lastName\": \"G\",\n    \"email\": \"denis.glukhov@mail.ru\",\n    \"phone\": \"+1111111111\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/user/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "user",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update user's single field",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseJSON = JSON.parse(responseBody)",
+              "",
+              "pm.test(\"validate response\", function () {",
+              "    pm.expect(pm.response.code).to.eql(200)",
+              "",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.eql(\"dglukhov2\");",
+              "    pm.expect(jsonData.firstName).to.eql(\"D\");",
+              "    pm.expect(jsonData.lastName).to.eql(\"G\");",
+              "    pm.expect(jsonData.email).to.eql(\"otherme@mail.ru\");",
+              "    pm.expect(jsonData.phone).to.eql(\"+1111111111\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"otherme@mail.ru\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/user/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "user",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"validate response\", function () {",
+              "    pm.expect(pm.response.code).to.eql(204)",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/user/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "user",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "arch.homework"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
